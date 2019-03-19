@@ -1,40 +1,17 @@
 # Dynamic Form Element Generator (Array and Elements)
-Multi Language App based on angular 6.
+Dynamic form Element generator based on angular 6. It adds the form elements on run time in Responsive driven form environment.
 
 ![alt text](img/dynamicRow.jpg)
 
 
 ## Demo
-You may want to have a look at the demo https://multilangapp.stackblitz.io
+You may want to have a look at the demo https://github-mjigiu.stackblitz.io
 
 ## Adding the component in your project
 ```
-<app-select-lang></app-select-lang>
+<app-dynamic-form-elem></app-dynamic-form-elem>
 ```
 
-### Dependencies
-```
-npm install @ngx-translate/core --save 
-npm install @ngx-translate/http-loader --save 
-npm install jquery --save
-npm install bootstrap@3 --save
-```
-### Services
-```
-The service call for transforming the language (common.service) and to get the data from assets/i18n (http-loader-factory.service)
-
-1. servies/common.service.ts
-2. services/http-loader-factory.service.ts
-```
-
-### assets/i18n
-#### The section where you require to define the JSON data for your content properties. Each JSON file for each language.\
-```
-en.json 
-ja.json 
-fr.json 
-ge.json 
-```
 ### common.service.ts
 ``` typescript
 import { TranslateService } from '@ngx-translate/core';
