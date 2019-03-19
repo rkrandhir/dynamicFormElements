@@ -12,112 +12,78 @@ You may want to have a look at the demo https://github-mjigiu.stackblitz.io
 <app-dynamic-form-elem></app-dynamic-form-elem>
 ```
 
-### common.service.ts
+### dynamic-form-elem.component.ts
 ``` typescript
-import { TranslateService } from '@ngx-translate/core';
+...
+...
+...
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CommonService {
-  selectedLang: string ='English';
-  constructor(private translate: TranslateService) {
-    translate.addLangs(['en', 'fr', 'ge', 'ja']);
-    translate.setDefaultLang('en');
-
-    let browserlang = translate.getBrowserLang();
-    translate.use(browserlang.match(/en|fr|ge|ja/) ? browserlang: 'en');
-   }
-
-  setlang(lang){
-    this.translate.use(lang);
-    if(lang==='en'){
-      this.selectedLang = 'English'
-    } else if(lang=='fr') { 
-      this.selectedLang = 'French'
-    } else if(lang=='ge') { 
-      this.selectedLang = 'German'
-    } else {
-      this.selectedLang = 'Japanese'
-    }
+ creatFormElem(){
+    this.form = this.fb.group({
+      'level1': this.fb.array([
+        this.initLevel1()
+      ])
+    });
   }
-}
+
+  initLevel1() {
+    return this.fb.group({
+      'level2': this.fb.array([
+        this.initLevel2()
+      ])
+    });
+  }
+
+  initLevel2() {
+    return this.fb.group({
+      'level2_1': ['Level 2 - Item 1'],
+      'level2_2': ['Level 2 - Item 2'],
+      'level2_3': ['Level 2 - Item 3']
+    })
+  }
+
+  addLevel1Item() {
+    const control = <FormArray>this.form.controls['level1'];
+    control.push(this.initLevel1());
+  }
+
+  addLevel2Item(i) {
+    const control = (<FormArray>this.form.controls['level1']).at(i).get('level2') as FormArray;
+    control.push(this.initLevel2());
+  }  
 ```
 
-### select-lang.component.ts
+### dynamic-form-elem.component.html
 ``` typescript
-import { Component, OnInit } from '@angular/core';
-import { CommonService } from '../service/common.service';
 
-@Component({
-  selector: 'app-select-lang',
-  templateUrl: './select-lang.component.html',
-  styleUrls: ['./select-lang.component.css']
-})
-export class SelectLangComponent implements OnInit {
-  private currentLang:string = '';
-  constructor(private commonService: CommonService){
-    this.currentLang = this.commonService.selectedLang
-   }
-
-  changeLanguage(lang){
-   this.commonService.setlang(lang)
-   this.currentLang = this.commonService.selectedLang
-  }
-
-  ngOnInit() {
-  }
-}
-
-```
-
-### select-lang.component.html
-``` typescript
-<header>
-  <div class='row header'>
-    <div class="col-sm-6"> 
-      <nav class="navbar navbar-static-top custom_nav" role="navigation" style="margin-bottom: 0">   
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-            <label>{{"header.Title" | translate}}</label>
-          </a>
+...
+...
+<form [formGroup]="form">
+      <!------------- level 1 -------->
+      <div formArrayName="level1">
+        <div class="row">
+          <div class="col-xs-12" *ngFor="let item of form['controls'].level1['controls']; let i=index">
+            <div formGroupName="{{i}}" class="level1">
+              <!------------- level 2 -------->
+              <div formArrayName="level2">
+                <div *ngFor="let Y of item['controls'].level2['controls']; let j=index">
+                  <div formGroupName="{{j}}" class="row level2">
+                    <div class="col-xs-12 col-sm-4"><input type="text" formControlName="level2_1"></div>
+                    <div class="col-xs-12 col-sm-4"><input type="text" formControlName="level2_2"></div>
+                    <div class="col-xs-12 col-sm-4"><input type="text" formControlName="level2_3"></div>
+                  </div>
+                </div>
+                <input type="button" (click)="addLevel2Item(i)" value="ADD Level 2">
+              </div>
+              <!------------- /. level 2 -------->
+            </div>
+          </div>
         </div>
-        <ul class="nav navbar-top-links navbar-right">
-          <li>Your Language: {{ currentLang }}</li>
-          <li class="dropdown">
-            <select name="language" id="" class="form-control" (change)="changeLanguage($event.target.value)">
-              <option value="en">{{"common.lang.en" | translate}}</option>
-              <option value="fr">{{"common.lang.fr" | translate}}</option>
-              <option value="ge">{{"common.lang.ge" | translate}}</option>
-              <option value="ja">{{"common.lang.ja" | translate}}</option>
-            </select>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</header>  
-```
-### ja.json
-``` json
+        <input type="button" (click)="addLevel1Item()" value="ADD Level 1" class='pull-right'>
+      </div>
+      <!------------- /. level 1 -------->
+    </form>
 
-{
-	"common": {
-		"lang": {
-			"en": "English",
-			"fr": "français",
-			"ge": "Deutsche",
-			"ja": "日本人"
-		}		
-    },
-    "header": {
-		"Title":"マルチラングアプリ"		
-	},
-	"container": {
-		"welocomeMsg": "アプリへようこそ",
-		"username": "ユーザー名",
-		"password": "パスワード",
-		"bodyMsg": "このページでは、アプリのマルチ言語機能が強調表示され、データは送信されません"
-	}
-}
 ```
+
+
