@@ -1,6 +1,11 @@
 # Dynamic Form Element Generator (Array and Elements)
 Dynamic form Element generator based on angular 6. It adds the form elements on run time in Responsive driven form environment.
 
+ADD LEVEL 1 -> It will add an outer FormArray set to form elements
+ADD LEVEL 2 -> It will add an inner FormArray set to form elements
+
+It dynamically generates the form elements that can be editable and updated Form values can be sent to API further.
+
 ![alt text](img/dynamicRow.jpg)
 
 
