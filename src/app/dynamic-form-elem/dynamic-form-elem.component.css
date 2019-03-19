@@ -1,0 +1,7 @@
+.level1, .level2{margin: 10px 0}
+.level1{border:1px dashed #b3b3b3; background-color: #d6d6d6}
+.level2{border:1px solid #f5f4f4; background-color: #dedede} 
+input[type='button']{margin:0 10px 10px 10px;background: #00ceff;border: 1px solid transparent;padding: 10px}
+input[type='text']{margin: 10px 0;border-radius: 4px;border: 1px solid transparent;padding: 4px;color: #6b6b6b}
+ 
+ 
