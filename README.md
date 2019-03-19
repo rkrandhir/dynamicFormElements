@@ -1,7 +1,7 @@
 # Dynamic Form Element Generator (Array and Elements)
 Multi Language App based on angular 6.
 
-![alt text](img/multilang.png)
+![alt text](img/dynamicRow.jpg)
 
 
 ## Demo
