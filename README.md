@@ -64,30 +64,30 @@ You may want to have a look at the demo https://github-mjigiu.stackblitz.io
 ...
 ...
 <form [formGroup]="form">
-      <!------------- level 1 -------->
-      <div formArrayName="level1">
-        <div class="row">
-          <div class="col-xs-12" *ngFor="let item of form['controls'].level1['controls']; let i=index">
-            <div formGroupName="{{i}}" class="level1">
-              <!------------- level 2 -------->
-              <div formArrayName="level2">
-                <div *ngFor="let Y of item['controls'].level2['controls']; let j=index">
-                  <div formGroupName="{{j}}" class="row level2">
-                    <div class="col-xs-12 col-sm-4"><input type="text" formControlName="level2_1"></div>
-                    <div class="col-xs-12 col-sm-4"><input type="text" formControlName="level2_2"></div>
-                    <div class="col-xs-12 col-sm-4"><input type="text" formControlName="level2_3"></div>
-                  </div>
-                </div>
-                <input type="button" (click)="addLevel2Item(i)" value="ADD Level 2">
+  <!------------- level 1 -------->
+  <div formArrayName="level1">
+    
+      <div *ngFor="let item of form['controls'].level1['controls']; let i=index">
+        <div formGroupName="{{i}}" class="level1">
+          <!------------- level 2 -------->
+          <div formArrayName="level2">
+            <div *ngFor="let Y of item['controls'].level2['controls']; let j=index">
+              <div formGroupName="{{j}}" class="level2">
+                <div class="sub-level"><input type="text" formControlName="level2_1"></div>
+                <div class="sub-level"><input type="text" formControlName="level2_2"></div>
+                <div class="sub-level"><input type="text" formControlName="level2_3"></div>
               </div>
-              <!------------- /. level 2 -------->
             </div>
+            <input type="button" (click)="addLevel2Item(i)" value="ADD Level 2">
           </div>
+          <!------------- /. level 2 -------->
         </div>
-        <input type="button" (click)="addLevel1Item()" value="ADD Level 1" class='pull-right'>
-      </div>
-      <!------------- /. level 1 -------->
-    </form>
+      </div>        
+    <input type="button" (click)="addLevel1Item()" value="ADD Level 1" class='floatRight'>
+  </div>
+  <!------------- /. level 1 -------->
+</form> 
+<pre style="font-size:15px">{{ form.value | json }}</pre>
 
 ```
 
